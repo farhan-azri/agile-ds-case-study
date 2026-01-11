@@ -1,34 +1,27 @@
-import streamlit as st
-import pandas as pd
+# monitor_dashboard.py
 import os
+import pandas as pd
+import streamlit as st
+from log_utils import LOG_PATH
 
+st.set_page_config(page_title="Model Monitoring Dashboard", layout="wide")
 st.title("📊 Model Monitoring Dashboard")
 
-LOG_FILE = "logs/monitoring_logs.csv"
-
-# ✅ Check if log file exists
-if not os.path.exists(LOG_FILE):
-    st.warning("No monitoring logs found yet.")
-    st.info("Run the prediction app and submit feedback to generate logs.")
+if not os.path.exists(LOG_PATH):
+    st.warning("No monitoring logs found yet. Run prediction app and submit feedback.")
     st.stop()
 
-# Load logs
-df = pd.read_csv(LOG_FILE)
+df = pd.read_csv(LOG_PATH)
 
-st.subheader("Recent Predictions")
+st.subheader("Recent Logs")
 st.dataframe(df.tail(10))
 
-# --- Average latency ---
 st.subheader("Average Latency by Model")
-latency = df.groupby("model_version")["latency_ms"].mean()
-st.bar_chart(latency)
+st.bar_chart(df.groupby("model_version")["latency_ms"].mean())
 
-# --- Feedback score ---
 st.subheader("Average Feedback Score")
-feedback = df.groupby("model_version")["feedback_score"].mean()
-st.bar_chart(feedback)
+st.bar_chart(df.groupby("model_version")["feedback_score"].mean())
 
-# --- Comments ---
-st.subheader("Recent User Comments")
-comments = df[df["comments"].notna()][["timestamp", "model_version", "comments"]]
-st.dataframe(comments.tail(5))
+st.subheader("Recent Comments")
+comments = df[df["feedback_text"].str.strip() != ""].tail(5)
+st.dataframe(comments[["timestamp", "model_version", "feedback_text"]])

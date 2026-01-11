@@ -1,33 +1,35 @@
-import csv
+# log_utils.py
 import os
 from datetime import datetime
+import pandas as pd
 
-LOG_FILE = "logs/monitoring_logs.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_DIR = os.path.join(BASE_DIR, "logs")
+LOG_PATH = os.path.join(LOG_DIR, "monitoring_logs.csv")
 
-def log_prediction(model_version, inputs, prediction, latency, feedback_score, comments):
-    file_exists = os.path.isfile(LOG_FILE)
+os.makedirs(LOG_DIR, exist_ok=True)
 
-    with open(LOG_FILE, mode="a", newline="") as f:
-        writer = csv.writer(f)
+def log_prediction(
+    model_version,
+    input_features,
+    prediction,
+    latency_ms,
+    feedback_score,
+    feedback_text,
+):
+    row = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "model_version": model_version,
+        "inputs": str(input_features),
+        "prediction": int(prediction),
+        "latency_ms": latency_ms,
+        "feedback_score": feedback_score,
+        "feedback_text": feedback_text or "",
+    }
 
-        if not file_exists:
-            writer.writerow([
-                "timestamp",
-                "model_version",
-                "inputs",
-                "prediction",
-                "latency_ms",
-                "feedback_score",
-                "comments"
-            ])
+    df_new = pd.DataFrame([row])
 
-        writer.writerow([
-            datetime.now(),
-            model_version,
-            str(inputs),
-            prediction,
-            latency,
-            feedback_score,
-            comments
-        ])
-
+    if not os.path.exists(LOG_PATH):
+        df_new.to_csv(LOG_PATH, index=False)
+    else:
+        df_new.to_csv(LOG_PATH, mode="a", header=False, index=False)

@@ -1,62 +1,81 @@
-import streamlit as st
-import joblib
+# predictive_app.py
 import time
-import os
+import joblib
+import pandas as pd
+import streamlit as st
 from log_utils import log_prediction
 
-# Ensure logs directory exists
-os.makedirs("logs", exist_ok=True)
+st.set_page_config(page_title="Flood Prediction App", layout="centered")
+st.title("🌧 Flood Potential Prediction (Model v1 vs v2)")
 
-# Load models
-model_v1 = joblib.load("models/model_v1.pkl")
-model_v2 = joblib.load("models/model_v2.pkl")
+@st.cache_resource
+def load_models():
+    return (
+        joblib.load("models/model_v1.pkl"),
+        joblib.load("models/model_v2.pkl"),
+    )
 
-st.title("🌧️ Flood Prediction Application")
+model_v1, model_v2 = load_models()
 
-# --- Inputs (match your dataset) ---
-rain_1h = st.number_input("Rainfall (last 1 hour)", value=0.0)
-rain_3h = st.number_input("Rainfall (last 3 hours)", value=0.0)
-rain_6h = st.number_input("Rainfall (last 6 hours)", value=0.0)
-rain_12h = st.number_input("Rainfall (last 12 hours)", value=0.0)
+# Session state
+if "pred_ready" not in st.session_state:
+    st.session_state.pred_ready = False
 
-inputs = [[rain_1h, rain_3h, rain_6h, rain_12h]]
+st.sidebar.header("Rainfall Inputs")
 
-# --- Store predictions in session state ---
-if "predictions" not in st.session_state:
-    st.session_state.predictions = None
+rain_1h = st.sidebar.number_input("Rain (1h)", 0.0)
+rain_3h = st.sidebar.number_input("Rain (3h sum)", 0.0)
+rain_6h = st.sidebar.number_input("Rain (6h sum)", 0.0)
+rain_12h = st.sidebar.number_input("Rain (12h sum)", 0.0)
 
-# --- Step 1: Predict ---
-if st.button("Predict Flood Risk"):
+input_df = pd.DataFrame([{
+    "rain_1h": rain_1h,
+    "rain_3h_sum": rain_3h,
+    "rain_6h_sum": rain_6h,
+    "rain_12h_sum": rain_12h,
+}])
+
+st.subheader("Input Summary")
+st.dataframe(input_df)
+
+if st.button("Run Prediction"):
     start = time.time()
-    pred_v1 = model_v1.predict(inputs)[0]
-    latency_v1 = round((time.time() - start) * 1000, 2)
 
-    start = time.time()
-    pred_v2 = model_v2.predict(inputs)[0]
-    latency_v2 = round((time.time() - start) * 1000, 2)
+    pred_v1 = model_v1.predict(input_df)[0]
+    pred_v2 = model_v2.predict(input_df)[0]
 
-    st.session_state.predictions = {
-        "inputs": inputs,
-        "v1": (pred_v1, latency_v1),
-        "v2": (pred_v2, latency_v2),
-    }
+    latency = round((time.time() - start) * 1000, 2)
 
-# --- Step 2: Display results & feedback ---
-if st.session_state.predictions:
-    pred_v1, latency_v1 = st.session_state.predictions["v1"]
-    pred_v2, latency_v2 = st.session_state.predictions["v2"]
+    st.session_state.pred_ready = True
+    st.session_state.pred_v1 = pred_v1
+    st.session_state.pred_v2 = pred_v2
+    st.session_state.latency = latency
 
-    st.subheader("Prediction Results")
-    st.write(f"Model v1 Prediction: **{pred_v1}** (Latency: {latency_v1} ms)")
-    st.write(f"Model v2 Prediction: **{pred_v2}** (Latency: {latency_v2} ms)")
+if st.session_state.pred_ready:
+    st.subheader("Predictions")
+    st.write(f"Model v1 Prediction: **{st.session_state.pred_v1}**")
+    st.write(f"Model v2 Prediction: **{st.session_state.pred_v2}**")
+    st.write(f"Latency: {st.session_state.latency} ms")
 
-    feedback = st.slider("Feedback Score (1 = Poor, 5 = Excellent)", 1, 5, 3)
-    comments = st.text_area("Comments / Observations")
+    st.subheader("Feedback")
+    score = st.slider("Usefulness (1–5)", 1, 5, 4)
+    comment = st.text_area("Comments")
 
-    # --- Step 3: Submit Feedback ---
     if st.button("Submit Feedback"):
-        log_prediction("v1", inputs, pred_v1, latency_v1, feedback, comments)
-        log_prediction("v2", inputs, pred_v2, latency_v2, feedback, comments)
-
-        st.success("✅ Feedback logged successfully")
-        st.session_state.predictions = None
+        log_prediction(
+            "v1",
+            input_df.to_dict(),
+            st.session_state.pred_v1,
+            st.session_state.latency,
+            score,
+            comment,
+        )
+        log_prediction(
+            "v2",
+            input_df.to_dict(),
+            st.session_state.pred_v2,
+            st.session_state.latency,
+            score,
+            comment,
+        )
+        st.success("✅ Feedback & predictions logged")
