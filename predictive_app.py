@@ -104,30 +104,6 @@ with st.expander("Rainfall Distributions"):
     st.caption("Hover on the chart to see all rainfall feature values for the selected date.")
 
 
-# with st.expander("Rainfall Distributions"):
-#     st.subheader("📈 Rainfall Trend (All Dates in Dataset)")
-
-#     chart_df = df.copy()
-#     chart_df = chart_df.groupby("date")[FEATURES].mean().reset_index()
-#     chart_df = chart_df.set_index("date")
-
-#     st.line_chart(chart_df)
-
-#     st.caption("This chart shows average rainfall features across all dates in the dataset.")
-
-# ===============================
-# CHART FOR ALL DATES
-# ===============================
-# st.subheader("📈 Rainfall Trend (All Dates in Dataset)")
-
-# chart_df = df.copy()
-# chart_df = chart_df.groupby("date")[FEATURES].mean().reset_index()
-# chart_df = chart_df.set_index("date")
-
-# st.line_chart(chart_df)
-
-# st.caption("This chart shows average rainfall features across all dates in the dataset.")
-
 # ===============================
 # DATE SELECTION FOR AUTO INPUTS
 # ===============================
@@ -151,7 +127,11 @@ rain_6h = st.sidebar.number_input("Rain (6h sum) in mm", value=default_rain_6h)
 rain_12h = st.sidebar.number_input("Rain (12h sum) in mm", value=default_rain_12h)
 
 # Input dataframe for prediction
-input_df = pd.DataFrame([{
+input_df_v1 = pd.DataFrame([{
+    "rain_1h": rain_1h
+}])
+
+input_df_v2 = pd.DataFrame([{
     "rain_1h": rain_1h,
     "rain_3h_sum": rain_3h,
     "rain_6h_sum": rain_6h,
@@ -164,8 +144,8 @@ input_df = pd.DataFrame([{
 if st.button("🚀 Run Prediction"):
     start = time.time()
 
-    pred_v1 = model_v1.predict(input_df)[0]
-    pred_v2 = model_v2.predict(input_df)[0]
+    pred_v1 = model_v1.predict(input_df_v1)[0]
+    pred_v2 = model_v2.predict(input_df_v2)[0]
 
     latency = round((time.time() - start) * 1000, 2)
 
@@ -173,6 +153,8 @@ if st.button("🚀 Run Prediction"):
     st.session_state.pred_v1 = int(pred_v1)
     st.session_state.pred_v2 = int(pred_v2)
     st.session_state.latency = latency
+
+
 
 # ===============================
 # DISPLAY RESULTS + FEEDBACK
@@ -191,27 +173,109 @@ if st.session_state.pred_ready:
     st.write(f"Model v1: {interpret(st.session_state.pred_v1)}")
     st.write(f"Model v2: {interpret(st.session_state.pred_v2)}")
 
-    st.subheader("📝 Feedback")
-    score = st.slider("Usefulness (1–5)", 1, 5, 4)
-    comment = st.text_area("Comments (optional)")
+# ===============================
+# FEEDBACK PER MODEL
+# ===============================
 
-    if st.button("📩 Submit Feedback"):
-        log_prediction(
-            "v1",
-            {"date": str(selected_date), **input_df.iloc[0].to_dict()},
-            st.session_state.pred_v1,
-            st.session_state.latency,
-            score,
-            comment,
-        )
+# ===============================
+# FEEDBACK PER MODEL
+# ===============================
+st.subheader("📝 Feedback (Per Model Version)")
 
-        log_prediction(
-            "v2",
-            {"date": str(selected_date), **input_df.iloc[0].to_dict()},
-            st.session_state.pred_v2,
-            st.session_state.latency,
-            score,
-            comment,
-        )
+col1, col2 = st.columns(2)
 
-        st.success("✅ Feedback & predictions logged into monitoring_logs.csv")
+with col1:
+    st.markdown("#### 🔹 Model v1")
+    score_v1 = st.slider("Score (1–5)", 1, 5, 4, key="score_v1")
+    comment_v1 = st.text_area("Comments", key="comment_v1")
+
+with col2:
+    st.markdown("#### 🔸 Model v2")
+    score_v2 = st.slider("Score (1–5)", 1, 5, 4, key="score_v2")
+    comment_v2 = st.text_area("Comments", key="comment_v2")
+
+
+if st.button("📩 Submit Feedback"):
+    # Log Model v1 feedback
+    log_prediction(
+        "v1",
+        {"date": str(selected_date), **input_df_v1.iloc[0].to_dict()},
+        st.session_state.pred_v1,
+        st.session_state.latency,
+        score_v1,
+        comment_v1,
+    )
+
+    # Log Model v2 feedback
+    log_prediction(
+        "v2",
+        {"date": str(selected_date), **input_df_v2.iloc[0].to_dict()},
+        st.session_state.pred_v2,
+        st.session_state.latency,
+        score_v2,
+        comment_v2,
+    )
+
+# if st.button("📩 Submit Feedback"):
+#     # Log Model v1 feedback (full rainfall features)
+#     log_prediction(
+#         "v1",
+#         {"date": str(selected_date), **input_df.iloc[0].to_dict()},
+#         st.session_state.pred_v1,
+#         st.session_state.latency,
+#         score_v1,
+#         comment_v1,
+#     )
+
+#     # Log Model v2 feedback (ONLY rain_1h)
+#     log_prediction(
+#         "v2",
+#         {
+#             "date": str(selected_date),
+#             "rain_1h": float(input_df.iloc[0]["rain_1h"]),
+#         },
+#         st.session_state.pred_v2,
+#         st.session_state.latency,
+#         score_v2,
+#         comment_v2,
+#     )
+
+    st.success("✅ Feedback logged separately for Model v1 and Model v2")
+
+
+# st.subheader("📝 Feedback (Per Model Version)")
+
+# col1, col2 = st.columns(2)
+
+# with col1:
+#     st.markdown("#### 🔹 Feedback for Model v1")
+#     score_v1 = st.slider("Usefulness v1 (1–5)", 1, 5, 4, key="score_v1")
+#     comment_v1 = st.text_area("Comments for Model v1", key="comment_v1")
+
+# with col2:
+#     st.markdown("#### 🔸 Feedback for Model v2")
+#     score_v2 = st.slider("Usefulness v2 (1–5)", 1, 5, 4, key="score_v2")
+#     comment_v2 = st.text_area("Comments for Model v2", key="comment_v2")
+
+# if st.button("📩 Submit Feedback"):
+#     # Log Model v1 feedback
+#     log_prediction(
+#         "v1",
+#         {"date": str(selected_date), **input_df.iloc[0].to_dict()},
+#         st.session_state.pred_v1,
+#         st.session_state.latency,
+#         score_v1,
+#         comment_v1,
+#     )
+
+#     # Log Model v2 feedback
+#     log_prediction(
+#         "v2",
+#         {"date": str(selected_date), **input_df.iloc[0].to_dict()},
+#         st.session_state.pred_v2,
+#         st.session_state.latency,
+#         score_v2,
+#         comment_v2,
+#     )
+
+#     st.success("✅ Feedback logged separately for Model v1 and Model v2")

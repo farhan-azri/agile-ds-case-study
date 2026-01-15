@@ -12,10 +12,11 @@ df = pd.read_csv("data/dataset.csv")
 
 # Features (exclude date + target)
 FEATURES = [
-    "rain_1h",
-    "rain_3h_sum",
-    "rain_6h_sum",
-    "rain_12h_sum",
+    "rain_1h"
+    # ,
+    # "rain_3h_sum",
+    # "rain_6h_sum",
+    # "rain_12h_sum",
 ]
 
 X = df[FEATURES]
