@@ -1,13 +1,25 @@
-# predictive_app.py
 import time
 import joblib
 import pandas as pd
 import streamlit as st
+import plotly.express as px
+import matplotlib.pyplot as plt
 from log_utils import log_prediction
 
+# ===============================
+# STREAMLIT PAGE CONFIG
+# ===============================
 st.set_page_config(page_title="Flood Prediction App", layout="centered")
-st.title("🌧 Flood Potential Prediction (Model v1 vs v2)")
+st.title("🌧 Flood Potential Prediction (Model Comparison)")
+# ===============================
 
+# FEATURES USED IN MODEL
+# ===============================
+FEATURES = ["rain_1h", "rain_3h_sum", "rain_6h_sum", "rain_12h_sum"]
+
+# ===============================
+# LOAD MODELS
+# ===============================
 @st.cache_resource
 def load_models():
     return (
@@ -17,17 +29,128 @@ def load_models():
 
 model_v1, model_v2 = load_models()
 
-# Session state
+# ===============================
+# LOAD DATASET
+# ===============================
+@st.cache_data
+def load_dataset():
+    df = pd.read_csv("data/dataset.csv")
+
+    # Ensure date exists
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"])
+    elif "datetime" in df.columns:
+        df["date"] = pd.to_datetime(df["datetime"]).dt.date
+        df["date"] = pd.to_datetime(df["date"])
+    else:
+        st.error("❌ dataset.csv must contain a 'date' or 'datetime' column.")
+        st.stop()
+
+    # Sort for clean charts
+    df = df.sort_values("date").reset_index(drop=True)
+    return df
+
+df = load_dataset()
+
+# ===============================
+# SESSION STATE
+# ===============================
 if "pred_ready" not in st.session_state:
     st.session_state.pred_ready = False
 
-st.sidebar.header("Rainfall Inputs")
+# ===============================
+# DATASET VISUALIZATION SECTION
+# ===============================
+st.subheader("📊 Dataset Overview")
 
-rain_1h = st.sidebar.number_input("Rain (1h)", 0.0)
-rain_3h = st.sidebar.number_input("Rain (3h sum)", 0.0)
-rain_6h = st.sidebar.number_input("Rain (6h sum)", 0.0)
-rain_12h = st.sidebar.number_input("Rain (12h sum)", 0.0)
 
+with st.expander("Summary Statistics"):
+    st.write(df[FEATURES].describe())
+
+
+with st.expander("Rainfall Distributions"):
+    # st.subheader("📈 Rainfall Trend (All Dates in Dataset)")
+
+    chart_df = df.copy()
+    chart_df = chart_df.groupby("date")[FEATURES].mean().reset_index()
+
+    # Convert wide → long format for Plotly multi-line chart
+    chart_long = chart_df.melt(
+        id_vars="date",
+        value_vars=FEATURES,
+        var_name="Feature",
+        value_name="Value"
+    )
+
+    fig = px.line(
+        chart_long,
+        x="date",
+        y="Value",
+        color="Feature",
+        markers=False,
+        # title="Average Rainfall Features Across All Dates"
+    )
+
+    fig.update_traces(mode="lines")
+    fig.update_layout(
+        hovermode="x unified",
+        xaxis_title="Date",
+        yaxis_title="Rainfall (mm)",
+        xaxis_tickformat="%Y-%m-%d"   # ✅ YYYY-MM-DD
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.caption("Hover on the chart to see all rainfall feature values for the selected date.")
+
+
+# with st.expander("Rainfall Distributions"):
+#     st.subheader("📈 Rainfall Trend (All Dates in Dataset)")
+
+#     chart_df = df.copy()
+#     chart_df = chart_df.groupby("date")[FEATURES].mean().reset_index()
+#     chart_df = chart_df.set_index("date")
+
+#     st.line_chart(chart_df)
+
+#     st.caption("This chart shows average rainfall features across all dates in the dataset.")
+
+# ===============================
+# CHART FOR ALL DATES
+# ===============================
+# st.subheader("📈 Rainfall Trend (All Dates in Dataset)")
+
+# chart_df = df.copy()
+# chart_df = chart_df.groupby("date")[FEATURES].mean().reset_index()
+# chart_df = chart_df.set_index("date")
+
+# st.line_chart(chart_df)
+
+# st.caption("This chart shows average rainfall features across all dates in the dataset.")
+
+# ===============================
+# DATE SELECTION FOR AUTO INPUTS
+# ===============================
+
+available_dates = sorted(df["date"].dt.date.unique())
+selected_date = st.sidebar.selectbox("Choose a date", available_dates)
+
+# Take mean values from dataset (instead of latest row)
+mean_values = df[FEATURES].describe().loc["mean"]
+
+default_rain_1h = float(mean_values["rain_1h"])
+default_rain_3h = float(mean_values["rain_3h_sum"])
+default_rain_6h = float(mean_values["rain_6h_sum"])
+default_rain_12h = float(mean_values["rain_12h_sum"])
+
+
+st.sidebar.subheader("🌧 Rainfall Inputs (Mean)")
+rain_1h = st.sidebar.number_input("Rain (1h) in mm", value=default_rain_1h)
+rain_3h = st.sidebar.number_input("Rain (3h sum) in mm", value=default_rain_3h)
+rain_6h = st.sidebar.number_input("Rain (6h sum) in mm", value=default_rain_6h)
+rain_12h = st.sidebar.number_input("Rain (12h sum) in mm", value=default_rain_12h)
+
+# Input dataframe for prediction
 input_df = pd.DataFrame([{
     "rain_1h": rain_1h,
     "rain_3h_sum": rain_3h,
@@ -35,10 +158,10 @@ input_df = pd.DataFrame([{
     "rain_12h_sum": rain_12h,
 }])
 
-st.subheader("Input Summary")
-st.dataframe(input_df)
-
-if st.button("Run Prediction"):
+# ===============================
+# PREDICTION BUTTON
+# ===============================
+if st.button("🚀 Run Prediction"):
     start = time.time()
 
     pred_v1 = model_v1.predict(input_df)[0]
@@ -47,35 +170,48 @@ if st.button("Run Prediction"):
     latency = round((time.time() - start) * 1000, 2)
 
     st.session_state.pred_ready = True
-    st.session_state.pred_v1 = pred_v1
-    st.session_state.pred_v2 = pred_v2
+    st.session_state.pred_v1 = int(pred_v1)
+    st.session_state.pred_v2 = int(pred_v2)
     st.session_state.latency = latency
 
+# ===============================
+# DISPLAY RESULTS + FEEDBACK
+# ===============================
 if st.session_state.pred_ready:
-    st.subheader("Predictions")
-    st.write(f"Model v1 Prediction: **{st.session_state.pred_v1}**")
-    st.write(f"Model v2 Prediction: **{st.session_state.pred_v2}**")
-    st.write(f"Latency: {st.session_state.latency} ms")
+    st.subheader("✅ Predictions")
 
-    st.subheader("Feedback")
+    st.write(f"📌 **Model v1 Prediction:** `{st.session_state.pred_v1}`")
+    st.write(f"📌 **Model v2 Prediction:** `{st.session_state.pred_v2}`")
+    st.write(f"⏱ **Latency:** {st.session_state.latency} ms")
+
+    def interpret(pred):
+        return "⚠️ Flood Risk HIGH" if pred == 1 else "✅ Flood Risk LOW"
+
+    st.write("### Interpretation")
+    st.write(f"Model v1: {interpret(st.session_state.pred_v1)}")
+    st.write(f"Model v2: {interpret(st.session_state.pred_v2)}")
+
+    st.subheader("📝 Feedback")
     score = st.slider("Usefulness (1–5)", 1, 5, 4)
-    comment = st.text_area("Comments")
+    comment = st.text_area("Comments (optional)")
 
-    if st.button("Submit Feedback"):
+    if st.button("📩 Submit Feedback"):
         log_prediction(
             "v1",
-            input_df.to_dict(),
+            {"date": str(selected_date), **input_df.iloc[0].to_dict()},
             st.session_state.pred_v1,
             st.session_state.latency,
             score,
             comment,
         )
+
         log_prediction(
             "v2",
-            input_df.to_dict(),
+            {"date": str(selected_date), **input_df.iloc[0].to_dict()},
             st.session_state.pred_v2,
             st.session_state.latency,
             score,
             comment,
         )
-        st.success("✅ Feedback & predictions logged")
+
+        st.success("✅ Feedback & predictions logged into monitoring_logs.csv")
