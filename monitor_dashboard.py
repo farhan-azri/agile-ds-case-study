@@ -14,7 +14,8 @@ if not os.path.exists(LOG_PATH):
 df = pd.read_csv(LOG_PATH)
 
 st.subheader("Recent Logs")
-st.dataframe(df.tail(10))
+# st.dataframe(df.tail(10))
+st.dataframe(df.sort_values(by="timestamp", ascending=True))
 
 st.subheader("Average Latency by Model")
 st.bar_chart(df.groupby("model_version")["latency_ms"].mean())
@@ -23,5 +24,5 @@ st.subheader("Average Feedback Score")
 st.bar_chart(df.groupby("model_version")["feedback_score"].mean())
 
 st.subheader("Recent Comments")
-comments = df[df["feedback_text"].str.strip() != ""].tail(5)
+comments = df[df["feedback_text"].str.strip() != ""]
 st.dataframe(comments[["timestamp", "model_version", "feedback_text"]])

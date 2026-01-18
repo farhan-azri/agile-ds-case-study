@@ -1,5 +1,105 @@
 timestamp,model_version,inputs,prediction,latency_ms,feedback_score,feedback_text
-2026-01-15T06:55:46.276352,v1,"{'date': '2024-12-31', 'rain_1h': 0.4046561590965264, 'rain_3h_sum': 1.2139646775562558, 'rain_6h_sum': 2.427826687657616, 'rain_12h_sum': 4.854759788218599}",0,5.4,4,low flood risk
-2026-01-15T06:55:46.278837,v2,"{'date': '2024-12-31', 'rain_1h': 0.4046561590965264, 'rain_3h_sum': 1.2139646775562558, 'rain_6h_sum': 2.427826687657616, 'rain_12h_sum': 4.854759788218599}",0,5.4,4,low flood risk
-2026-01-15T07:20:40.360812,v1,"{'date': '2025-09-10', 'rain_1h': 10.0}",0,5.41,4,good
-2026-01-15T07:20:40.363591,v2,"{'date': '2025-09-10', 'rain_1h': 10.0, 'rain_3h_sum': 20.0, 'rain_6h_sum': 30.0, 'rain_12h_sum': 40.0}",0,5.41,4,good
+2025-12-20 19:16:53,v2,"{""rain_1h"": 21.85, ""rain_3h_sum"": 96.58, ""rain_6h_sum"": 104.16, ""rain_12h_sum"": 140.38}",1,35.32,1,Need more explanation for prediction.
+2025-12-19 10:18:29,v2,"{""rain_1h"": 37.79, ""rain_3h_sum"": 105.75, ""rain_6h_sum"": 117.13, ""rain_12h_sum"": 195.73}",1,108.75,3,Can improve UI clarity.
+2025-12-17 16:31:16,v2,"{""rain_1h"": 38.63, ""rain_3h_sum"": 39.61, ""rain_6h_sum"": 51.52, ""rain_12h_sum"": 53.82}",1,77.57,3,Can improve UI clarity.
+2026-01-13 22:36:50,v2,"{""rain_1h"": 5.69, ""rain_3h_sum"": 38.16, ""rain_6h_sum"": 42.34, ""rain_12h_sum"": 178.34}",1,42.27,2,Useful for early warning.
+2025-12-26 14:00:15,v2,"{""rain_1h"": 13.41, ""rain_3h_sum"": 69.87, ""rain_6h_sum"": 82.9, ""rain_12h_sum"": 217.26}",1,53.09,1,This helps decision making.
+2025-12-18 02:03:23,v2,"{""rain_1h"": 44.13, ""rain_3h_sum"": 86.97, ""rain_6h_sum"": 127.39, ""rain_12h_sum"": 182.35}",1,124.53,5,This helps decision making.
+2025-12-31 13:58:59,v2,"{""rain_1h"": 22.1, ""rain_3h_sum"": 55.94, ""rain_6h_sum"": 138.2, ""rain_12h_sum"": 256.97}",1,65.15,1,Prediction seems accurate.
+2025-12-22 10:35:40,v1,"{""rain_1h"": 21.44, ""rain_3h_sum"": 63.2, ""rain_6h_sum"": 143.42, ""rain_12h_sum"": 165.7}",1,32.91,2,Looks correct based on rainfall.
+2025-12-22 15:39:34,v1,"{""rain_1h"": 40.46, ""rain_3h_sum"": 45.6, ""rain_6h_sum"": 141.68, ""rain_12h_sum"": 213.79}",1,74.13,5,Need more explanation for prediction.
+2026-01-13 12:14:14,v1,"{""rain_1h"": 40.18, ""rain_3h_sum"": 106.78, ""rain_6h_sum"": 191.48, ""rain_12h_sum"": 284.64}",1,74.98,1,Not sure about this result.
+2026-01-04 01:51:17,v1,"{""rain_1h"": 45.25, ""rain_3h_sum"": 111.03, ""rain_6h_sum"": 157.74, ""rain_12h_sum"": 246.7}",1,7.14,5,This helps decision making.
+2025-12-22 21:16:44,v2,"{""rain_1h"": 23.75, ""rain_3h_sum"": 96.72, ""rain_6h_sum"": 105.24, ""rain_12h_sum"": 178.25}",1,135.91,2,Can improve UI clarity.
+2026-01-15 16:32:45,v2,"{""rain_1h"": 48.85, ""rain_3h_sum"": 104.9, ""rain_6h_sum"": 204.18, ""rain_12h_sum"": 215.66}",1,93.04,2,Looks correct based on rainfall.
+2026-01-01 06:56:13,v2,"{""rain_1h"": 43.63, ""rain_3h_sum"": 58.84, ""rain_6h_sum"": 108.3, ""rain_12h_sum"": 218.43}",1,190.8,5,Looks correct based on rainfall.
+2025-12-31 22:47:54,v2,"{""rain_1h"": 26.27, ""rain_3h_sum"": 38.32, ""rain_6h_sum"": 40.7, ""rain_12h_sum"": 122.87}",1,114.72,4,This helps decision making.
+2026-01-02 05:52:17,v1,"{""rain_1h"": 49.16, ""rain_3h_sum"": 55.94, ""rain_6h_sum"": 143.02, ""rain_12h_sum"": 178.63}",1,105.75,1,Can improve UI clarity.
+2026-01-13 08:36:00,v2,"{""rain_1h"": 21.65, ""rain_3h_sum"": 22.43, ""rain_6h_sum"": 111.63, ""rain_12h_sum"": 246.36}",1,82.56,3,Can improve UI clarity.
+2026-01-08 19:59:15,v1,"{""rain_1h"": 41.94, ""rain_3h_sum"": 62.39, ""rain_6h_sum"": 146.31, ""rain_12h_sum"": 181.49}",1,69.06,3,Prediction seems accurate.
+2025-12-31 06:53:56,v1,"{""rain_1h"": 25.12, ""rain_3h_sum"": 41.94, ""rain_6h_sum"": 72.43, ""rain_12h_sum"": 123.48}",1,60.55,5,Prediction seems accurate.
+2025-12-31 19:55:19,v2,"{""rain_1h"": 29.52, ""rain_3h_sum"": 31.04, ""rain_6h_sum"": 79.94, ""rain_12h_sum"": 208.08}",1,165.42,1,Need more explanation for prediction.
+2026-01-05 06:48:02,v1,"{""rain_1h"": 47.22, ""rain_3h_sum"": 103.05, ""rain_6h_sum"": 133.89, ""rain_12h_sum"": 249.09}",1,27.91,4,Looks correct based on rainfall.
+2026-01-08 03:44:04,v1,"{""rain_1h"": 21.64, ""rain_3h_sum"": 42.78, ""rain_6h_sum"": 75.51, ""rain_12h_sum"": 94.27}",1,22.36,1,Need more explanation for prediction.
+2025-12-28 19:29:03,v2,"{""rain_1h"": 39.07, ""rain_3h_sum"": 73.93, ""rain_6h_sum"": 89.24, ""rain_12h_sum"": 177.67}",1,82.4,2,This helps decision making.
+2025-12-25 01:25:58,v2,"{""rain_1h"": 31.68, ""rain_3h_sum"": 39.14, ""rain_6h_sum"": 40.51, ""rain_12h_sum"": 65.54}",1,145.56,2,Need more explanation for prediction.
+2025-12-24 16:45:43,v2,"{""rain_1h"": 12.78, ""rain_3h_sum"": 39.76, ""rain_6h_sum"": 119.02, ""rain_12h_sum"": 174.74}",1,192.35,5,Need more explanation for prediction.
+2025-12-30 16:28:47,v1,"{""rain_1h"": 43.11, ""rain_3h_sum"": 118.93, ""rain_6h_sum"": 217.05, ""rain_12h_sum"": 257.71}",1,124.1,2,Good model performance.
+2026-01-07 01:25:06,v1,"{""rain_1h"": 13.83, ""rain_3h_sum"": 46.49, ""rain_6h_sum"": 72.77, ""rain_12h_sum"": 191.37}",1,183.93,4,Useful for early warning.
+2025-12-16 23:50:40,v1,"{""rain_1h"": 30.37, ""rain_3h_sum"": 102.13, ""rain_6h_sum"": 166.69, ""rain_12h_sum"": 203.89}",1,193.5,2,Useful for early warning.
+2025-12-21 13:26:17,v1,"{""rain_1h"": 6.04, ""rain_3h_sum"": 30.63, ""rain_6h_sum"": 89.36, ""rain_12h_sum"": 204.48}",1,140.52,2,Looks correct based on rainfall.
+2026-01-03 04:59:52,v1,"{""rain_1h"": 19.53, ""rain_3h_sum"": 52.28, ""rain_6h_sum"": 81.51, ""rain_12h_sum"": 137.31}",1,152.57,5,Prediction seems accurate.
+2026-01-07 16:24:13,v2,"{""rain_1h"": 5.91, ""rain_3h_sum"": 46.15, ""rain_6h_sum"": 118.92, ""rain_12h_sum"": 137.64}",1,152.55,2,Prediction seems accurate.
+2025-12-31 06:22:41,v2,"{""rain_1h"": 34.37, ""rain_3h_sum"": 50.35, ""rain_6h_sum"": 94.97, ""rain_12h_sum"": 95.85}",1,179.75,3,This helps decision making.
+2026-01-10 11:00:37,v1,"{""rain_1h"": 10.63, ""rain_3h_sum"": 85.55, ""rain_6h_sum"": 95.97, ""rain_12h_sum"": 99.63}",1,182.83,1,Prediction seems accurate.
+2025-12-29 14:28:34,v2,"{""rain_1h"": 24.83, ""rain_3h_sum"": 88.44, ""rain_6h_sum"": 156.16, ""rain_12h_sum"": 248.48}",1,82.82,3,This helps decision making.
+2026-01-10 02:04:22,v1,"{""rain_1h"": 37.9, ""rain_3h_sum"": 83.14, ""rain_6h_sum"": 124.77, ""rain_12h_sum"": 272.28}",1,126.01,2,Prediction seems accurate.
+2025-12-19 20:23:33,v2,"{""rain_1h"": 13.09, ""rain_3h_sum"": 76.55, ""rain_6h_sum"": 170.98, ""rain_12h_sum"": 295.8}",1,198.33,3,Useful for early warning.
+2026-01-12 19:13:37,v1,"{""rain_1h"": 21.09, ""rain_3h_sum"": 74.64, ""rain_6h_sum"": 148.22, ""rain_12h_sum"": 290.7}",1,190.49,2,Useful for early warning.
+2026-01-14 01:01:58,v2,"{""rain_1h"": 2.06, ""rain_3h_sum"": 77.8, ""rain_6h_sum"": 104.77, ""rain_12h_sum"": 212.96}",1,174.42,3,This helps decision making.
+2026-01-03 06:51:47,v2,"{""rain_1h"": 40.74, ""rain_3h_sum"": 73.03, ""rain_6h_sum"": 142.08, ""rain_12h_sum"": 166.75}",1,116.63,1,Latency is good.
+2026-01-14 00:28:06,v1,"{""rain_1h"": 23.7, ""rain_3h_sum"": 84.62, ""rain_6h_sum"": 120.69, ""rain_12h_sum"": 126.4}",1,10.12,5,Can improve UI clarity.
+2025-12-19 05:23:08,v1,"{""rain_1h"": 16.87, ""rain_3h_sum"": 26.81, ""rain_6h_sum"": 55.61, ""rain_12h_sum"": 70.59}",1,186.11,5,Looks correct based on rainfall.
+2025-12-21 14:29:33,v1,"{""rain_1h"": 18.58, ""rain_3h_sum"": 54.57, ""rain_6h_sum"": 57.15, ""rain_12h_sum"": 111.69}",1,140.48,4,Can improve UI clarity.
+2026-01-04 06:07:44,v1,"{""rain_1h"": 39.47, ""rain_3h_sum"": 72.91, ""rain_6h_sum"": 111.03, ""rain_12h_sum"": 228.71}",1,79.01,4,Looks correct based on rainfall.
+2025-12-18 16:18:38,v1,"{""rain_1h"": 34.5, ""rain_3h_sum"": 111.17, ""rain_6h_sum"": 116.83, ""rain_12h_sum"": 139.35}",1,71.72,1,Useful for early warning.
+2026-01-05 09:45:04,v1,"{""rain_1h"": 0.88, ""rain_3h_sum"": 5.34, ""rain_6h_sum"": 55.8, ""rain_12h_sum"": 144.56}",1,72.43,1,Useful for early warning.
+2026-01-02 22:41:40,v1,"{""rain_1h"": 32.01, ""rain_3h_sum"": 75.73, ""rain_6h_sum"": 173.36, ""rain_12h_sum"": 259.83}",1,193.59,4,Too many false alarms.
+2026-01-12 19:42:46,v2,"{""rain_1h"": 28.32, ""rain_3h_sum"": 45.99, ""rain_6h_sum"": 67.54, ""rain_12h_sum"": 146.81}",1,39.1,5,Can improve UI clarity.
+2026-01-05 19:10:21,v1,"{""rain_1h"": 48.83, ""rain_3h_sum"": 86.82, ""rain_6h_sum"": 150.19, ""rain_12h_sum"": 204.99}",1,66.76,3,Can improve UI clarity.
+2025-12-20 04:25:19,v1,"{""rain_1h"": 35.15, ""rain_3h_sum"": 98.21, ""rain_6h_sum"": 143.13, ""rain_12h_sum"": 230.78}",1,131.74,5,This helps decision making.
+2025-12-26 06:35:27,v1,"{""rain_1h"": 32.09, ""rain_3h_sum"": 35.04, ""rain_6h_sum"": 70.58, ""rain_12h_sum"": 185.66}",1,57.75,4,Too many false alarms.
+2026-01-16 06:07:29,v1,"{""rain_1h"": 34.61, ""rain_3h_sum"": 87.52, ""rain_6h_sum"": 87.71, ""rain_12h_sum"": 106.08}",1,174.47,2,Not sure about this result.
+2026-01-06 01:53:10,v1,"{""rain_1h"": 5.13, ""rain_3h_sum"": 70.06, ""rain_6h_sum"": 80.76, ""rain_12h_sum"": 210.33}",1,107.07,2,Useful for early warning.
+2026-01-12 05:41:00,v1,"{""rain_1h"": 38.3, ""rain_3h_sum"": 89.44, ""rain_6h_sum"": 153.72, ""rain_12h_sum"": 199.51}",1,112.38,3,Not sure about this result.
+2025-12-30 07:39:06,v1,"{""rain_1h"": 42.23, ""rain_3h_sum"": 70.76, ""rain_6h_sum"": 72.08, ""rain_12h_sum"": 128.05}",1,137.99,1,Looks correct based on rainfall.
+2025-12-17 10:59:25,v1,"{""rain_1h"": 47.29, ""rain_3h_sum"": 111.02, ""rain_6h_sum"": 197.96, ""rain_12h_sum"": 240.95}",1,186.72,3,Latency is good.
+2025-12-26 20:41:00,v1,"{""rain_1h"": 48.27, ""rain_3h_sum"": 123.53, ""rain_6h_sum"": 202.4, ""rain_12h_sum"": 273.96}",1,123.88,5,Good model performance.
+2025-12-19 01:58:39,v1,"{""rain_1h"": 39.04, ""rain_3h_sum"": 112.73, ""rain_6h_sum"": 188.56, ""rain_12h_sum"": 189.05}",1,193.33,1,Latency is good.
+2026-01-03 20:23:27,v2,"{""rain_1h"": 9.34, ""rain_3h_sum"": 89.24, ""rain_6h_sum"": 176.22, ""rain_12h_sum"": 220.25}",1,78.36,1,Not sure about this result.
+2025-12-24 16:36:07,v2,"{""rain_1h"": 14.16, ""rain_3h_sum"": 33.21, ""rain_6h_sum"": 81.92, ""rain_12h_sum"": 192.7}",1,68.89,2,Too many false alarms.
+2025-12-23 22:14:45,v2,"{""rain_1h"": 10.66, ""rain_3h_sum"": 13.49, ""rain_6h_sum"": 17.81, ""rain_12h_sum"": 98.11}",0,116.87,2,Looks correct based on rainfall.
+2026-01-07 11:39:05,v2,"{""rain_1h"": 25.87, ""rain_3h_sum"": 40.42, ""rain_6h_sum"": 107.23, ""rain_12h_sum"": 142.36}",1,50.99,4,Latency is good.
+2026-01-08 15:46:57,v1,"{""rain_1h"": 19.55, ""rain_3h_sum"": 35.71, ""rain_6h_sum"": 106.81, ""rain_12h_sum"": 164.19}",1,163.57,5,Too many false alarms.
+2026-01-04 02:07:56,v2,"{""rain_1h"": 43.55, ""rain_3h_sum"": 115.48, ""rain_6h_sum"": 146.25, ""rain_12h_sum"": 281.3}",1,45.69,3,This helps decision making.
+2025-12-30 16:03:24,v2,"{""rain_1h"": 24.3, ""rain_3h_sum"": 43.98, ""rain_6h_sum"": 125.07, ""rain_12h_sum"": 162.65}",1,53.4,1,Looks correct based on rainfall.
+2025-12-19 18:27:07,v2,"{""rain_1h"": 28.95, ""rain_3h_sum"": 41.26, ""rain_6h_sum"": 98.67, ""rain_12h_sum"": 210.64}",1,118.12,1,Looks correct based on rainfall.
+2025-12-17 13:02:56,v2,"{""rain_1h"": 23.67, ""rain_3h_sum"": 76.8, ""rain_6h_sum"": 135.34, ""rain_12h_sum"": 192.82}",1,49.17,3,Latency is good.
+2025-12-19 17:12:17,v1,"{""rain_1h"": 21.18, ""rain_3h_sum"": 46.43, ""rain_6h_sum"": 69.44, ""rain_12h_sum"": 219.37}",1,65.25,1,This helps decision making.
+2025-12-21 04:28:20,v1,"{""rain_1h"": 8.9, ""rain_3h_sum"": 80.92, ""rain_6h_sum"": 125.5, ""rain_12h_sum"": 264.76}",1,115.45,2,Good model performance.
+2026-01-06 02:52:55,v2,"{""rain_1h"": 49.72, ""rain_3h_sum"": 107.81, ""rain_6h_sum"": 108.44, ""rain_12h_sum"": 251.95}",1,156.44,2,Looks correct based on rainfall.
+2025-12-21 10:37:55,v1,"{""rain_1h"": 13.4, ""rain_3h_sum"": 40.94, ""rain_6h_sum"": 110.21, ""rain_12h_sum"": 153.17}",1,56.3,3,Too many false alarms.
+2026-01-06 20:01:00,v2,"{""rain_1h"": 6.15, ""rain_3h_sum"": 30.63, ""rain_6h_sum"": 33.29, ""rain_12h_sum"": 154.26}",1,53.38,2,Latency is good.
+2025-12-28 10:52:27,v2,"{""rain_1h"": 49.43, ""rain_3h_sum"": 74.11, ""rain_6h_sum"": 172.97, ""rain_12h_sum"": 260.69}",1,67.02,1,This helps decision making.
+2025-12-21 11:56:08,v2,"{""rain_1h"": 17.65, ""rain_3h_sum"": 84.32, ""rain_6h_sum"": 139.7, ""rain_12h_sum"": 246.14}",1,81.23,2,Not sure about this result.
+2026-01-02 09:43:28,v2,"{""rain_1h"": 23.3, ""rain_3h_sum"": 89.34, ""rain_6h_sum"": 118.28, ""rain_12h_sum"": 236.19}",1,16.05,5,Good model performance.
+2026-01-06 22:58:32,v2,"{""rain_1h"": 28.64, ""rain_3h_sum"": 37.21, ""rain_6h_sum"": 75.44, ""rain_12h_sum"": 195.17}",1,44.3,2,Need more explanation for prediction.
+2026-01-01 06:10:01,v2,"{""rain_1h"": 41.96, ""rain_3h_sum"": 93.19, ""rain_6h_sum"": 138.46, ""rain_12h_sum"": 190.11}",1,124.46,5,Not sure about this result.
+2025-12-20 11:43:00,v1,"{""rain_1h"": 27.57, ""rain_3h_sum"": 38.83, ""rain_6h_sum"": 70.69, ""rain_12h_sum"": 140.69}",1,84.99,3,Latency is good.
+2026-01-08 03:13:30,v1,"{""rain_1h"": 31.04, ""rain_3h_sum"": 97.45, ""rain_6h_sum"": 101.32, ""rain_12h_sum"": 101.4}",1,151.57,2,Can improve UI clarity.
+2025-12-21 00:32:37,v2,"{""rain_1h"": 34.84, ""rain_3h_sum"": 52.0, ""rain_6h_sum"": 54.37, ""rain_12h_sum"": 126.46}",1,130.76,5,Need more explanation for prediction.
+2025-12-19 14:13:23,v2,"{""rain_1h"": 17.63, ""rain_3h_sum"": 60.93, ""rain_6h_sum"": 159.86, ""rain_12h_sum"": 188.64}",1,131.69,5,Too many false alarms.
+2026-01-16 03:37:39,v2,"{""rain_1h"": 31.32, ""rain_3h_sum"": 80.67, ""rain_6h_sum"": 166.3, ""rain_12h_sum"": 281.16}",1,84.62,5,Not sure about this result.
+2026-01-12 20:58:57,v2,"{""rain_1h"": 42.93, ""rain_3h_sum"": 55.89, ""rain_6h_sum"": 72.06, ""rain_12h_sum"": 140.9}",1,172.34,3,Need more explanation for prediction.
+2025-12-27 16:00:24,v2,"{""rain_1h"": 7.49, ""rain_3h_sum"": 83.82, ""rain_6h_sum"": 139.81, ""rain_12h_sum"": 254.21}",1,174.73,3,Looks correct based on rainfall.
+2025-12-29 20:27:22,v1,"{""rain_1h"": 24.41, ""rain_3h_sum"": 95.97, ""rain_6h_sum"": 143.42, ""rain_12h_sum"": 203.46}",1,95.43,4,This helps decision making.
+2026-01-14 14:05:20,v2,"{""rain_1h"": 6.82, ""rain_3h_sum"": 80.85, ""rain_6h_sum"": 168.86, ""rain_12h_sum"": 172.08}",1,121.14,3,Prediction seems accurate.
+2026-01-05 06:53:08,v1,"{""rain_1h"": 27.08, ""rain_3h_sum"": 36.32, ""rain_6h_sum"": 89.96, ""rain_12h_sum"": 131.75}",1,83.46,3,Latency is good.
+2026-01-07 12:34:01,v1,"{""rain_1h"": 45.3, ""rain_3h_sum"": 94.71, ""rain_6h_sum"": 159.04, ""rain_12h_sum"": 189.11}",1,182.59,1,Prediction seems accurate.
+2025-12-28 01:51:54,v1,"{""rain_1h"": 24.73, ""rain_3h_sum"": 64.93, ""rain_6h_sum"": 142.68, ""rain_12h_sum"": 158.09}",1,33.16,5,Need more explanation for prediction.
+2026-01-05 07:13:37,v1,"{""rain_1h"": 2.67, ""rain_3h_sum"": 52.61, ""rain_6h_sum"": 68.73, ""rain_12h_sum"": 188.63}",1,137.65,5,Not sure about this result.
+2026-01-13 20:57:50,v2,"{""rain_1h"": 29.34, ""rain_3h_sum"": 58.1, ""rain_6h_sum"": 112.34, ""rain_12h_sum"": 247.02}",1,119.66,4,Latency is good.
+2026-01-08 20:04:57,v2,"{""rain_1h"": 49.63, ""rain_3h_sum"": 82.97, ""rain_6h_sum"": 134.83, ""rain_12h_sum"": 234.28}",1,46.49,3,Looks correct based on rainfall.
+2026-01-13 10:59:52,v1,"{""rain_1h"": 23.35, ""rain_3h_sum"": 80.34, ""rain_6h_sum"": 124.03, ""rain_12h_sum"": 220.02}",1,114.1,1,Need more explanation for prediction.
+2026-01-08 05:08:02,v1,"{""rain_1h"": 35.47, ""rain_3h_sum"": 60.68, ""rain_6h_sum"": 92.6, ""rain_12h_sum"": 144.79}",1,37.46,4,Looks correct based on rainfall.
+2026-01-01 05:39:42,v2,"{""rain_1h"": 22.44, ""rain_3h_sum"": 94.38, ""rain_6h_sum"": 191.46, ""rain_12h_sum"": 266.01}",1,140.93,1,Too many false alarms.
+2025-12-22 01:09:41,v1,"{""rain_1h"": 11.12, ""rain_3h_sum"": 48.26, ""rain_6h_sum"": 91.44, ""rain_12h_sum"": 227.65}",1,100.75,5,Need more explanation for prediction.
+2026-01-02 08:54:57,v2,"{""rain_1h"": 35.8, ""rain_3h_sum"": 55.19, ""rain_6h_sum"": 70.18, ""rain_12h_sum"": 172.69}",1,65.17,5,Latency is good.
+2026-01-16 13:54:04,v1,"{""rain_1h"": 1.69, ""rain_3h_sum"": 27.36, ""rain_6h_sum"": 113.57, ""rain_12h_sum"": 208.47}",1,96.54,3,Need more explanation for prediction.
+2026-01-12 00:31:58,v1,"{""rain_1h"": 0.42, ""rain_3h_sum"": 45.27, ""rain_6h_sum"": 124.58, ""rain_12h_sum"": 261.89}",1,25.23,2,Latency is good.
+2026-01-12 10:02:45,v1,"{""rain_1h"": 5.58, ""rain_3h_sum"": 26.9, ""rain_6h_sum"": 110.08, ""rain_12h_sum"": 137.32}",1,94.52,3,Can improve UI clarity.
+2025-12-16 15:26:16,v2,"{""rain_1h"": 45.31, ""rain_3h_sum"": 104.56, ""rain_6h_sum"": 177.88, ""rain_12h_sum"": 327.1}",1,118.55,5,Useful for early warning.
+2026-01-17T01:25:57.191031,v1,"{'date': '2025-10-10', 'rain_1h': 10.0}",0,8.03,4,here is my comment
+2026-01-17T01:25:57.195779,v2,"{'date': '2025-10-10', 'rain_1h': 10.0, 'rain_3h_sum': 12.0, 'rain_6h_sum': 13.0, 'rain_12h_sum': 15.0}",0,8.03,4,here is my comment
+2026-01-17T01:55:05.489652,v1,"{'date': '2025-12-31', 'rain_1h': 10.0}",0,7.05,4,my comment for Model v1
+2026-01-17T01:55:05.491983,v2,"{'date': '2025-12-31', 'rain_1h': 10.0, 'rain_3h_sum': 12.0, 'rain_6h_sum': 13.0, 'rain_12h_sum': 15.0}",0,7.05,4,my comment for Model v2
